@@ -12,10 +12,10 @@ export interface Dimensions {
   height: number;
 }
 
-type DimensionsNode = HTMLElement | null;
-type DimensionsRef = (node: DimensionsNode) => void;
-type UpdateDimensions = () => void;
-type UseDimensionsReturn = {
+export type DimensionsNode = HTMLElement | null;
+export type DimensionsRef = (node: DimensionsNode) => void;
+export type UpdateDimensions = () => void;
+export type UseDimensionsReturn = {
   ref: DimensionsRef;
   dimensions: Dimensions;
   updateDimensions: UpdateDimensions;
