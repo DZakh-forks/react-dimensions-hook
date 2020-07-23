@@ -1,5 +1,5 @@
-import { useLayoutEffect, useState, useCallback } from 'react';
-import ResizeObserver from 'resize-observer-polyfill';
+import { useLayoutEffect, useState, useCallback } from "react";
+import ResizeObserver from "resize-observer-polyfill";
 
 export interface Dimensions {
   x: number;
@@ -12,10 +12,16 @@ export interface Dimensions {
   height: number;
 }
 
+type DimensionsRef = (node: HTMLElement | null) => void;
+type UpdateDimensions = () => void;
+type UseDimensionsReturn = {
+  ref: DimensionsRef;
+  dimensions: Dimensions;
+  updateDimensions: UpdateDimensions;
+};
+
 // Export hook
-export function useDimensions(
-  dependencies: any[] = []
-): { ref: (node: HTMLElement | null) => void; dimensions: Dimensions } {
+export function useDimensions(dependencies: any[] = []): UseDimensionsReturn {
   const [node, setNode] = useState<null | HTMLElement>(null);
   const ref = useCallback((newNode: HTMLElement | null) => {
     setNode(newNode);
@@ -30,7 +36,7 @@ export function useDimensions(
     right: 0,
     bottom: 0,
     width: 0,
-    height: 0
+    height: 0,
   });
 
   // Define measure function
@@ -44,7 +50,7 @@ export function useDimensions(
       right: rect.right,
       bottom: rect.bottom,
       width: rect.width,
-      height: rect.height
+      height: rect.height,
     });
   }, []);
 
@@ -71,6 +77,13 @@ export function useDimensions(
 
   return {
     ref,
-    dimensions
+    dimensions,
+    updateDimensions: () => {
+      if (!node) {
+        return;
+      }
+
+      measure(node);
+    },
   };
 }
