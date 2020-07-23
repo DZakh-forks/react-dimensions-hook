@@ -40,8 +40,12 @@ export function useDimensions(dependencies: any[] = []): UseDimensionsReturn {
   });
 
   // Define measure function
-  const measure = useCallback((innerNode: HTMLElement) => {
-    const rect = innerNode.getBoundingClientRect();
+  const updateDimensions = useCallback(() => {
+    if (!node) {
+      return;
+    }
+
+    const rect = node.getBoundingClientRect();
     setDimensions({
       x: rect.left,
       y: rect.top,
@@ -52,7 +56,7 @@ export function useDimensions(dependencies: any[] = []): UseDimensionsReturn {
       width: rect.width,
       height: rect.height,
     });
-  }, []);
+  }, [node]);
 
   useLayoutEffect(() => {
     if (!node) {
@@ -60,11 +64,11 @@ export function useDimensions(dependencies: any[] = []): UseDimensionsReturn {
     }
 
     // Set initial measurements
-    measure(node);
+    updateDimensions();
 
     // Observe resizing of element
     const resizeObserver = new ResizeObserver(() => {
-      measure(node);
+      updateDimensions();
     });
 
     resizeObserver.observe(node);
@@ -73,17 +77,11 @@ export function useDimensions(dependencies: any[] = []): UseDimensionsReturn {
     return () => {
       resizeObserver.disconnect();
     };
-  }, [node, measure, ...dependencies]);
+  }, [node, updateDimensions, ...dependencies]);
 
   return {
     ref,
     dimensions,
-    updateDimensions: () => {
-      if (!node) {
-        return;
-      }
-
-      measure(node);
-    },
+    updateDimensions,
   };
 }
