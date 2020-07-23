@@ -1,4 +1,4 @@
-export interface Dimensions {
+export declare type Dimensions = {
   x: number;
   y: number;
   left: number;
@@ -7,11 +7,11 @@ export interface Dimensions {
   bottom: number;
   width: number;
   height: number;
-}
-declare type DimensionsNode = HTMLElement | null;
-declare type DimensionsRef = (node: DimensionsNode) => void;
-declare type UpdateDimensions = () => void;
-declare type UseDimensionsReturn = {
+};
+export declare type DimensionsNode = HTMLElement | null;
+export declare type DimensionsRef = (node: DimensionsNode) => void;
+export declare type UpdateDimensions = () => void;
+export declare type UseDimensionsReturn = {
   ref: DimensionsRef;
   dimensions: Dimensions;
   updateDimensions: UpdateDimensions;
@@ -19,4 +19,3 @@ declare type UseDimensionsReturn = {
 export declare function useDimensions(
   dependencies?: any[]
 ): UseDimensionsReturn;
-export {};

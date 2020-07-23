@@ -20,6 +20,7 @@ var react_1 = require("react");
 var resize_observer_polyfill_1 = __importDefault(
   require("resize-observer-polyfill")
 );
+var helpers_1 = require("./helpers");
 // Export hook
 function useDimensions(dependencies) {
   if (dependencies === void 0) {
@@ -64,7 +65,7 @@ function useDimensions(dependencies) {
     },
     [node]
   );
-  react_1.useLayoutEffect(function () {
+  helpers_1.useIsomorphicEffect(function () {
     if (!node) {
       return;
     }
