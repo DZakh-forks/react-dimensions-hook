@@ -1,5 +1,7 @@
-import { useLayoutEffect, useState, useCallback } from "react";
+import { useState, useCallback } from "react";
 import ResizeObserver from "resize-observer-polyfill";
+
+import { useIsomorphicEffect } from "./helpers";
 
 export type Dimensions = {
   x: number;
@@ -58,7 +60,7 @@ export function useDimensions(dependencies: any[] = []): UseDimensionsReturn {
     });
   }, [node]);
 
-  useLayoutEffect(() => {
+  useIsomorphicEffect(() => {
     if (!node) {
       return;
     }
