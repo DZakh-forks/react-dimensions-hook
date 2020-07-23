@@ -1,7 +1,7 @@
 import { useLayoutEffect, useState, useCallback } from "react";
 import ResizeObserver from "resize-observer-polyfill";
 
-export interface Dimensions {
+export type Dimensions = {
   x: number;
   y: number;
   left: number;
@@ -10,12 +10,11 @@ export interface Dimensions {
   bottom: number;
   width: number;
   height: number;
-}
-
-type DimensionsNode = HTMLElement | null;
-type DimensionsRef = (node: DimensionsNode) => void;
-type UpdateDimensions = () => void;
-type UseDimensionsReturn = {
+};
+export type DimensionsNode = HTMLElement | null;
+export type DimensionsRef = (node: DimensionsNode) => void;
+export type UpdateDimensions = () => void;
+export type UseDimensionsReturn = {
   ref: DimensionsRef;
   dimensions: Dimensions;
   updateDimensions: UpdateDimensions;
