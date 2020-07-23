@@ -12,7 +12,8 @@ export interface Dimensions {
   height: number;
 }
 
-type DimensionsRef = (node: HTMLElement | null) => void;
+type DimensionsNode = HTMLElement | null;
+type DimensionsRef = (node: DimensionsNode) => void;
 type UpdateDimensions = () => void;
 type UseDimensionsReturn = {
   ref: DimensionsRef;
@@ -22,8 +23,8 @@ type UseDimensionsReturn = {
 
 // Export hook
 export function useDimensions(dependencies: any[] = []): UseDimensionsReturn {
-  const [node, setNode] = useState<null | HTMLElement>(null);
-  const ref = useCallback((newNode: HTMLElement | null) => {
+  const [node, setNode] = useState<DimensionsNode>(null);
+  const ref = useCallback((newNode: DimensionsNode) => {
     setNode(newNode);
   }, []);
 
