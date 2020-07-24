@@ -66,11 +66,13 @@ export function useDimensions(dependencies: any[] = []): UseDimensionsReturn {
       return;
     }
 
+    console.log('initial', element);
     // Set initial measurements
     updateDimensions();
 
     // Observe resizing of element
     const resizeObserver = new ResizeObserver(() => {
+      console.log('resize', element);
       updateDimensions();
     });
 
@@ -80,7 +82,7 @@ export function useDimensions(dependencies: any[] = []): UseDimensionsReturn {
     return () => {
       resizeObserver.disconnect();
     };
-  }, [ref.current, ...dependencies]);
+  }, [ref.current, updateDimensions, ...dependencies]);
 
   return {
     ref,

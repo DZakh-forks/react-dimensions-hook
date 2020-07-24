@@ -62,10 +62,12 @@ function useDimensions(dependencies) {
     if (!element) {
       return;
     }
+    console.log('initial', element);
     // Set initial measurements
     updateDimensions();
     // Observe resizing of element
     var resizeObserver = new resize_observer_polyfill_1.default(function () {
+      console.log('resize', element);
       updateDimensions();
     });
     resizeObserver.observe(element);
@@ -73,7 +75,7 @@ function useDimensions(dependencies) {
     return function () {
       resizeObserver.disconnect();
     };
-  }, __spreadArrays([ref.current], dependencies));
+  }, __spreadArrays([ref.current, updateDimensions], dependencies));
   return {
     ref: ref,
     dimensions: dimensions,
