@@ -18,9 +18,7 @@
     "url": "https://github.com/cubonacci/react-dimensions-hook/issues"
   },
   "homepage": "https://github.com/cubonacci/react-dimensions-hook#readme",
-  "dependencies": {
-    "resize-observer-polyfill": "^1.5.1"
-  },
+  "dependencies": {},
   "devDependencies": {
     "@types/react": "^16.9.43",
     "@typescript-eslint/eslint-plugin": "^3.7.0",

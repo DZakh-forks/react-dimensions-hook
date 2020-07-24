@@ -17,4 +17,4 @@ export declare type UseDimensionsReturn = {
   dimensions: Dimensions;
   updateDimensions: UpdateDimensions;
 };
-export declare function useDimensions(dependencies?: any[]): UseDimensionsReturn;
+export declare function useDimensions(): UseDimensionsReturn;

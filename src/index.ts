@@ -1,7 +1,4 @@
 import { useState, useCallback, useRef } from 'react';
-import ResizeObserver from 'resize-observer-polyfill';
-
-import { useIsomorphicEffect } from './helpers';
 
 export type Dimensions = {
   x: number;
@@ -23,7 +20,7 @@ export type UseDimensionsReturn = {
 };
 
 // Export hook
-export function useDimensions(dependencies: any[] = []): UseDimensionsReturn {
+export function useDimensions(): UseDimensionsReturn {
   const ref = useRef<HTMLElement>(null);
 
   // Keep track of measurements
@@ -58,31 +55,6 @@ export function useDimensions(dependencies: any[] = []): UseDimensionsReturn {
       height: rect.height,
     });
   }, [ref.current]);
-
-  useIsomorphicEffect(() => {
-    const element = ref.current;
-
-    if (!element) {
-      return;
-    }
-
-    console.log('initial', element);
-    // Set initial measurements
-    updateDimensions();
-
-    // Observe resizing of element
-    const resizeObserver = new ResizeObserver(() => {
-      console.log('resize', element);
-      updateDimensions();
-    });
-
-    resizeObserver.observe(element);
-
-    // Cleanup
-    return () => {
-      resizeObserver.disconnect();
-    };
-  }, [ref.current, updateDimensions, ...dependencies]);
 
   return {
     ref,
