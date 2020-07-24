@@ -1,7 +1,7 @@
-import { useState, useCallback } from "react";
-import ResizeObserver from "resize-observer-polyfill";
+import { useState, useCallback, useRef } from 'react';
+import ResizeObserver from 'resize-observer-polyfill';
 
-import { useIsomorphicEffect } from "./helpers";
+import { useIsomorphicEffect } from './helpers';
 
 export type Dimensions = {
   x: number;
@@ -14,7 +14,7 @@ export type Dimensions = {
   height: number;
 };
 export type DimensionsNode = HTMLElement | null;
-export type DimensionsRef = (node: DimensionsNode) => void;
+export type DimensionsRef = React.RefObject<HTMLElement>;
 export type UpdateDimensions = () => void;
 export type UseDimensionsReturn = {
   ref: DimensionsRef;
@@ -24,10 +24,7 @@ export type UseDimensionsReturn = {
 
 // Export hook
 export function useDimensions(dependencies: any[] = []): UseDimensionsReturn {
-  const [node, setNode] = useState<DimensionsNode>(null);
-  const ref = useCallback((newNode: DimensionsNode) => {
-    setNode(newNode);
-  }, []);
+  const ref = useRef<HTMLElement>(null);
 
   // Keep track of measurements
   const [dimensions, setDimensions] = useState<Dimensions>({
@@ -43,11 +40,13 @@ export function useDimensions(dependencies: any[] = []): UseDimensionsReturn {
 
   // Define measure function
   const updateDimensions = useCallback(() => {
-    if (!node) {
+    const element = ref.current;
+
+    if (!element) {
       return;
     }
 
-    const rect = node.getBoundingClientRect();
+    const rect = element.getBoundingClientRect();
     setDimensions({
       x: rect.left,
       y: rect.top,
@@ -58,10 +57,12 @@ export function useDimensions(dependencies: any[] = []): UseDimensionsReturn {
       width: rect.width,
       height: rect.height,
     });
-  }, [node]);
+  }, [ref.current]);
 
   useIsomorphicEffect(() => {
-    if (!node) {
+    const element = ref.current;
+
+    if (!element) {
       return;
     }
 
@@ -73,13 +74,13 @@ export function useDimensions(dependencies: any[] = []): UseDimensionsReturn {
       updateDimensions();
     });
 
-    resizeObserver.observe(node);
+    resizeObserver.observe(element);
 
     // Cleanup
     return () => {
       resizeObserver.disconnect();
     };
-  }, [node, updateDimensions, ...dependencies]);
+  }, [ref.current, updateDimensions, ...dependencies]);
 
   return {
     ref,

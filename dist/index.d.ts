@@ -1,3 +1,4 @@
+/// <reference types="react" />
 export declare type Dimensions = {
   x: number;
   y: number;
@@ -9,13 +10,11 @@ export declare type Dimensions = {
   height: number;
 };
 export declare type DimensionsNode = HTMLElement | null;
-export declare type DimensionsRef = (node: DimensionsNode) => void;
+export declare type DimensionsRef = React.RefObject<HTMLElement>;
 export declare type UpdateDimensions = () => void;
 export declare type UseDimensionsReturn = {
   ref: DimensionsRef;
   dimensions: Dimensions;
   updateDimensions: UpdateDimensions;
 };
-export declare function useDimensions(
-  dependencies?: any[]
-): UseDimensionsReturn;
+export declare function useDimensions(dependencies?: any[]): UseDimensionsReturn;
