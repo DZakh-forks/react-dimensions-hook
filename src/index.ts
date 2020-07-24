@@ -80,7 +80,7 @@ export function useDimensions(dependencies: any[] = []): UseDimensionsReturn {
     return () => {
       resizeObserver.disconnect();
     };
-  }, [ref.current, updateDimensions, ...dependencies]);
+  }, [ref.current, ...dependencies]);
 
   return {
     ref,

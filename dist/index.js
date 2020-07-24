@@ -73,7 +73,7 @@ function useDimensions(dependencies) {
     return function () {
       resizeObserver.disconnect();
     };
-  }, __spreadArrays([ref.current, updateDimensions], dependencies));
+  }, __spreadArrays([ref.current], dependencies));
   return {
     ref: ref,
     dimensions: dimensions,
